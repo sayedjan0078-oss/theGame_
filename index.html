@@ -123,9 +123,9 @@ header {
 .icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
 .menu-toggle { display: none; }
 
-/* دکمه مدیریت مخصوص موبایل - پیش‌فرض در دسکتاپ مخفی است */
-.mobile-only-admin {
-  display: none;
+/* دکمه مدیریت مخصوص موبایل - پیش‌فرض در دسکتاپ کاملاً و قطعاً مخفی است */
+.nav-menu > li.mobile-only-admin {
+  display: none !important;
 }
 .mobile-admin-btn {
   width: 100%; padding: 12px; border-radius: 10px;
@@ -461,9 +461,9 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   /* مخفی کردن دکمه دسکتاپ در موبایل */
   .admin-btn-desktop { display: none !important; }
   
-  /* نمایش دکمه موبایل فقط در موبایل */
-  .mobile-only-admin {
-    display: block !important;
+  /* نمایش دکمه موبایل فقط در موبایل (با اولویت بالا) */
+  .nav-menu > li.mobile-only-admin {
+    display: flex !important;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 2px solid var(--border);
@@ -539,7 +539,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <li><a href="#categories">دسته‌بندی</a></li>
       <li><a href="#products">بازی‌ها</a></li>
       <li><a href="#contact">تماس با ما</a></li>
-      <!-- دکمه مدیریت مخصوص موبایل (در دسکتاپ مخفی است) -->
+      <!-- دکمه مدیریت مخصوص موبایل (در دسکتاپ ۱۰۰٪ مخفی است) -->
       <li class="mobile-only-admin">
         <button class="mobile-admin-btn" id="openAdminMobile">
           <i class="fa-solid fa-user-shield"></i> پنل مدیریت
