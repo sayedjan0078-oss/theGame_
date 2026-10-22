@@ -101,7 +101,7 @@ header {
   color: var(--accent); background: rgba(59, 130, 246, 0.08); 
 }
 
-/* دکمه مدیریت مخصوص دسکتاپ (کاملاً تراز شده) */
+/* دکمه مدیریت مخصوص دسکتاپ (کنار دارک مود) */
 .admin-btn-desktop {
   display: flex; align-items: center; gap: 8px;
   padding: 8px 16px; border-radius: 10px;
@@ -123,7 +123,10 @@ header {
 .icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
 .menu-toggle { display: none; }
 
-/* دکمه مدیریت مخصوص موبایل */
+/* دکمه مدیریت مخصوص موبایل - پیش‌فرض در دسکتاپ مخفی است */
+.mobile-only-admin {
+  display: none;
+}
 .mobile-admin-btn {
   width: 100%; padding: 12px; border-radius: 10px;
   background: var(--primary); color: #fff; font-weight: 600;
@@ -455,7 +458,17 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 }
 
 @media (max-width: 640px) {
-  .admin-btn-desktop { display: none !important; } /* مخفی کردن دکمه دسکتاپ در موبایل */
+  /* مخفی کردن دکمه دسکتاپ در موبایل */
+  .admin-btn-desktop { display: none !important; }
+  
+  /* نمایش دکمه موبایل فقط در موبایل */
+  .mobile-only-admin {
+    display: block !important;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border);
+    border-bottom: none !important;
+  }
   
   .nav-menu {
     position: fixed; top: 72px; right: -100%; width: 85%; height: calc(100vh - 72px);
@@ -467,11 +480,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   .nav-menu > li { display: block; border-bottom: 1px solid var(--border); }
   .nav-menu a:not(.mobile-admin-btn) {
     height: 50px; justify-content: flex-start; font-size: 1.1rem;
-  }
-  
-  .mobile-only-admin {
-    display: block !important;
-    margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border); border-bottom: none !important;
   }
   
   .menu-toggle { display: flex; }
@@ -531,15 +539,15 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <li><a href="#categories">دسته‌بندی</a></li>
       <li><a href="#products">بازی‌ها</a></li>
       <li><a href="#contact">تماس با ما</a></li>
-      <!-- دکمه مدیریت مخصوص موبایل -->
+      <!-- دکمه مدیریت مخصوص موبایل (در دسکتاپ مخفی است) -->
       <li class="mobile-only-admin">
         <button class="mobile-admin-btn" id="openAdminMobile">
-          <i class="fa-solid fa-user-shield"></i> پنل مدئئیریت
+          <i class="fa-solid fa-user-shield"></i> پنل مدیریت
         </button>
       </li>
     </ul>
     <div class="nav-actions">
-      <!-- دکمه مدیریت مخصوص دسکتاپ (کاملاً تراز شده) -->
+      <!-- دکمه مدیریت مخصوص دسکتاپ (کنار دارک مود) -->
       <button class="admin-btn-desktop" id="openAdminDesktop">
         <i class="fa-solid fa-user-shield"></i> مدیریت
       </button>
@@ -641,7 +649,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <h2><i class="fa-solid fa-headset"></i> ارتباط با ما</h2>
       <p>برای دریافت اطلاعات بیشتر، مشاوره و ارتباط با تیم The Game از طریق شبکه‌های اجتماعی زیر با ما در تماس باشید. ما همیشه آماده پاسخگویی به شما هستیم.</p>
       <div class="socials">
-        <!-- لینک واتساپ اصلاح شده -->
         <a href="https://wa.me/93730272491" target="_blank" class="social wa" title="واتساپ"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://instagram.com/thegame" target="_blank" class="social ig" title="اینستاگرام"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://facebook.com/thegame" target="_blank" class="social fb" title="فیسبوک"><i class="fa-brands fa-facebook-f"></i></a>
@@ -679,7 +686,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
     </div>
     <div class="footer-bottom">
       <div>© 2026 <strong>The Game</strong> - تمامی حقوق محفوظ است</div>
-      <!-- لینک Nexa AF اصلاح شده -->
       <div>Made with <span class="heart">❤</span> by <a href="https://nexaaf.com" target="_blank" style="color:var(--gold); font-weight:700;">Nexa AF</a></div>
     </div>
   </div>
@@ -702,7 +708,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <button class="modal-close" style="position:static;background:rgba(255,255,255,0.2)" onclick="closeModal('adminModal')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="admin-body">
-      <!-- لاگین -->
       <div id="loginView">
         <div class="login-box">
           <i class="fa-solid fa-lock main-icon"></i>
@@ -722,7 +727,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
         </div>
       </div>
       
-      <!-- پنل -->
       <div id="panelView" style="display:none">
         <div class="admin-tabs">
           <button class="admin-tab active" onclick="switchTab('add')"><i class="fa-solid fa-plus"></i> افزودن محصول</button>
@@ -730,7 +734,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
           <button class="admin-tab" onclick="doLogout()" style="margin-right:auto;color:#ef4444"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
         </div>
         
-        <!-- فرم افزودن/ویرایش -->
         <div class="admin-panel active" id="panel-add">
           <form id="productForm" onsubmit="saveProduct(event)">
             <input type="hidden" id="productId">
@@ -794,7 +797,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
           </form>
         </div>
         
-        <!-- لیست محصولات -->
         <div class="admin-panel" id="panel-list">
           <div class="table-wrapper">
             <table class="admin-table">
@@ -820,9 +822,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 <div class="toast" id="toast"></div>
 
 <script>
-/* ================================
-   داده‌های پیش‌فرض و وضعیت
-   ================================ */
 const DEFAULT_PRODUCTS = [
   {
     id:1, name:"God of War Ragnarök", genre:"اکشن، ماجراجویی",
@@ -859,9 +858,6 @@ let currentSlide = 0;
 let currentFilter = 'all';
 let isAdmin = localStorage.getItem('tg_admin') === 'true';
 
-/* ================================
-   توابع کمکی
-   ================================ */
 function saveProducts() {
   try {
     localStorage.setItem('tg_products', JSON.stringify(products));
@@ -884,9 +880,6 @@ function safeValue(val) {
   return val.toString().trim();
 }
 
-/* ================================
-   اسلایدر
-   ================================ */
 function initSlider() {
   const slides = document.querySelectorAll('.slide');
   const dots = document.getElementById('dots');
@@ -911,9 +904,6 @@ function changeSlide(dir) {
   goToSlide(currentSlide);
 }
 
-/* ================================
-   رندر محصولات
-   ================================ */
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
   const filtered = currentFilter === 'all' ? products : products.filter(p => p.platforms.includes(currentFilter));
@@ -972,9 +962,6 @@ function updateCounts() {
   });
 }
 
-/* ================================
-   مودال جزئیات
-   ================================ */
 function openProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
@@ -1030,9 +1017,6 @@ document.querySelectorAll('.modal').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
 });
 
-/* ================================
-   مدیریت تم و منو
-   ================================ */
 const themeToggle = document.getElementById('themeToggle');
 function applyTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
@@ -1052,9 +1036,6 @@ document.querySelectorAll('.nav-menu a').forEach(a => {
   a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'));
 });
 
-/* ================================
-   پنل ادمین و آپلود عکس
-   ================================ */
 function openAdminPanel() {
   document.getElementById('adminModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -1070,7 +1051,6 @@ function openAdminPanel() {
   }
 }
 
-// اتصال هر دو دکمه (دسکتاپ و موبایل) به یک تابع
 document.getElementById('openAdminDesktop').addEventListener('click', openAdminPanel);
 document.getElementById('openAdminMobile').addEventListener('click', openAdminPanel);
 
@@ -1125,9 +1105,6 @@ function handleImageUpload(input) {
   reader.readAsDataURL(file);
 }
 
-/* ================================
-   CRUD محصولات
-   ================================ */
 function saveProduct(e) {
   e.preventDefault();
   const platforms = Array.from(document.querySelectorAll('.pPlatform:checked')).map(c => c.value);
@@ -1233,9 +1210,6 @@ function renderAdminTable() {
   `).join('');
 }
 
-/* ================================
-   راه‌اندازی اولیه
-   ================================ */
 initSlider();
 renderProducts();
 updateCounts();
