@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* ================================
-   متغیرها و تنظیمات پایه (Woodmart Style)
+   متغیرها و تنظیمات پایه
    ================================ */
 :root {
   --primary: #1e3a8a;
@@ -48,7 +48,7 @@ img { max-width: 100%; display: block; }
 .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 /* ================================
-   هدر حرفه‌ای
+   هدر حرفه‌ای و خلوت
    ================================ */
 header {
   position: sticky; top: 0; z-index: 100;
@@ -84,15 +84,19 @@ header {
   display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
 }
 .icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
-.admin-btn {
-  background: var(--primary); color: #fff; padding: 8px 18px; border-radius: 10px;
-  font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
-}
-.admin-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
 .menu-toggle { display: none; }
 
+/* دکمه مدیریت در منوی موبایل */
+.mobile-admin-btn {
+  width: 100%; padding: 12px; border-radius: 10px;
+  background: var(--primary); color: #fff; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 16px;
+}
+.mobile-admin-btn:hover { background: var(--accent); }
+
 /* ================================
-   اسلایدر حرفه‌ای (Hero)
+   اسلایدر حرفه‌ای
    ================================ */
 .hero-slider { position: relative; height: 550px; overflow: hidden; }
 .slides { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -126,12 +130,12 @@ header {
   width: 48px; height: 48px; border-radius: 50%;
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
   color: #fff; display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; z-index: 3; backdrop-filter: blur(4px);
+  font-size: 1.2rem; z-index: 10; backdrop-filter: blur(4px);
 }
 .slider-nav:hover { background: #fbbf24; color: #0f172a; border-color: #fbbf24; }
 .slider-nav.prev { right: 30px; }
 .slider-nav.next { left: 30px; }
-.slider-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
+.slider-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
 .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: var(--transition); }
 .dot.active { background: #fbbf24; width: 32px; border-radius: 5px; }
 
@@ -174,7 +178,7 @@ section { padding: 80px 0; }
 .cat-count { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--bg); color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
 
 /* ================================
-   محصولات (Woodmart Style)
+   محصولات
    ================================ */
 .filter-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
 .filter-btn {
@@ -264,7 +268,7 @@ footer { background: var(--primary-dark); color: #94a3b8; padding: 60px 0 24px; 
 @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
 /* ================================
-   مودال‌ها (Professional)
+   مودال‌ها
    ================================ */
 .modal {
   position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
@@ -310,7 +314,7 @@ footer { background: var(--primary-dark); color: #94a3b8; padding: 60px 0 24px; 
 .info-item .value { font-weight: 700; font-size: 1rem; }
 
 /* ================================
-   پنل مدیریت (پیشرفته)
+   پنل مدیریت
    ================================ */
 .admin-modal .modal-box { max-width: 1000px; }
 .admin-head {
@@ -328,7 +332,6 @@ footer { background: var(--primary-dark); color: #94a3b8; padding: 60px 0 24px; 
 .admin-panel { display: none; animation: fadeIn 0.3s ease; }
 .admin-panel.active { display: block; }
 
-/* فرم آپلود عکس حرفه‌ای */
 .upload-area {
   border: 2px dashed var(--border); border-radius: 12px; padding: 32px;
   text-align: center; cursor: pointer; transition: var(--transition);
@@ -372,7 +375,6 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .btn-ghost { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
 .btn-ghost:hover { background: var(--border); }
 
-/* جدول مدیریت */
 .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
 .admin-table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 600px; }
 .admin-table th, .admin-table td { padding: 16px; text-align: right; border-bottom: 1px solid var(--border); }
@@ -389,13 +391,11 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .mini-btn.delete { background: #ef4444; }
 .mini-btn.delete:hover { background: #dc2626; transform: scale(1.1); }
 
-/* لاگین */
 .login-box { max-width: 400px; margin: 40px auto; padding: 40px 32px; background: var(--surface); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); text-align: center; }
 .login-box i.main-icon { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
 .login-box h3 { font-size: 1.4rem; margin-bottom: 8px; }
 .login-box p { color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; }
 
-/* Toast */
 .toast {
   position: fixed; bottom: 30px; left: 30px; z-index: 2000;
   padding: 14px 24px; border-radius: 12px; color: #fff; font-weight: 600;
@@ -430,7 +430,9 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   .hero-slider { height: 400px; }
   .slide-title { font-size: 1.8rem; }
   .slide-desc { font-size: 0.95rem; }
-  .slider-nav { width: 36px; height: 36px; font-size: 0.9rem; }
+  
+  /* فلش‌های اسلایدر در موبایل پایین‌تر قرار می‌گیرند تا روی متن نیایند */
+  .slider-nav { top: 70%; width: 40px; height: 40px; font-size: 1rem; }
   .slider-nav.prev { right: 12px; }
   .slider-nav.next { left: 12px; }
   
@@ -481,10 +483,14 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <li><a href="#categories">دسته‌بندی</a></li>
       <li><a href="#products">بازی‌ها</a></li>
       <li><a href="#contact">تماس با ما</a></li>
+      <li style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+        <button class="mobile-admin-btn" id="openAdminMobile">
+          <i class="fa-solid fa-user-shield"></i> پنل مدیریت
+        </button>
+      </li>
     </ul>
     <div class="nav-actions">
       <button class="icon-btn" id="themeToggle" title="تغییر تم"><i class="fa-solid fa-moon"></i></button>
-      <button class="admin-btn" id="openAdmin"><i class="fa-solid fa-user-shield"></i> <span class="hide-mobile">مدیریت</span></button>
       <button class="icon-btn menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
@@ -512,11 +518,11 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       </div>
     </div>
     <div class="slide">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1600658273159-e1e92f28e89d?w=1600&q=80')"></div>
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=1600&q=80')"></div>
       <div class="slide-content">
         <div class="slide-badge"><i class="fa-brands fa-xbox"></i> نسخه Xbox</div>
-        <h1 class="slide-title">کنسول Xbox</h1>
-        <p class="slide-desc">دنیای بی‌پایان بازی‌های ایکس‌باکس با گرافیک نسل جدید و گیم‌پس بی‌نظیر.</p>
+        <h1 class="slide-title">دنیای بی‌نظیر Xbox</h1>
+        <p class="slide-desc">بهترین بازی‌های کنسول ایکس‌باکس با گرافیک نسل جدید و تجربه‌ای فراموش‌نشدنی.</p>
         <a href="#products" class="slide-btn">مشاهده بازی‌ها <i class="fa-solid fa-arrow-left"></i></a>
       </div>
     </div>
@@ -649,16 +655,15 @@ textarea.form-control { resize: vertical; min-height: 100px; }
           <p>برای دسترسی به پنل مدیریت، اطلاعات خود را وارد کنید</p>
           <div class="form-group" style="text-align:right; margin-bottom:16px">
             <label><i class="fa-solid fa-user"></i> نام کاربری</label>
-            <input type="text" class="form-control" id="loginUser" placeholder="admin">
+            <input type="text" class="form-control" id="loginUser" placeholder="نام کاربری">
           </div>
           <div class="form-group" style="text-align:right; margin-bottom:24px">
             <label><i class="fa-solid fa-key"></i> رمز عبور</label>
-            <input type="password" class="form-control" id="loginPass" placeholder="••••••••">
+            <input type="password" class="form-control" id="loginPass" placeholder="رمز عبور">
           </div>
           <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="doLogin()">
             <i class="fa-solid fa-right-to-bracket"></i> ورود
           </button>
-          <p style="margin-top:16px;font-size:0.85rem;color:var(--text-muted)">پیش‌فرض: admin / admin123</p>
         </div>
       </div>
       
@@ -688,27 +693,27 @@ textarea.form-control { resize: vertical; min-height: 100px; }
               
               <div class="form-group">
                 <label><i class="fa-solid fa-heading"></i> نام بازی</label>
-                <input type="text" class="form-control" id="pName" required placeholder="مثال: God of War">
+                <input type="text" class="form-control" id="pName" placeholder="مثال: God of War">
               </div>
               <div class="form-group">
                 <label><i class="fa-solid fa-tag"></i> ژانر</label>
-                <input type="text" class="form-control" id="pGenre" required placeholder="مثال: اکشن، ماجراجویی">
+                <input type="text" class="form-control" id="pGenre" placeholder="مثال: اکشن، ماجراجویی">
               </div>
               <div class="form-group">
-                <label><i class="fa-brands fa-youtube"></i> لینک ویدیو یوتیوب (اختیاری)</label>
+                <label><i class="fa-brands fa-youtube"></i> لینک ویدیو یوتیوب</label>
                 <input type="url" class="form-control" id="pVideo" placeholder="https://youtube.com/watch?v=...">
               </div>
               <div class="form-group">
                 <label><i class="fa-solid fa-star"></i> امتیاز (از 10)</label>
-                <input type="number" class="form-control" id="pRating" min="0" max="10" step="0.1" required placeholder="9.2">
+                <input type="text" class="form-control" id="pRating" placeholder="مثال: 9.2">
               </div>
               <div class="form-group">
                 <label><i class="fa-solid fa-calendar"></i> سال انتشار</label>
-                <input type="number" class="form-control" id="pYear" required placeholder="2024">
+                <input type="text" class="form-control" id="pYear" placeholder="مثال: 2024">
               </div>
               <div class="form-group">
                 <label><i class="fa-solid fa-building"></i> سازنده</label>
-                <input type="text" class="form-control" id="pDeveloper" required placeholder="مثال: Santa Monica">
+                <input type="text" class="form-control" id="pDeveloper" placeholder="مثال: Santa Monica">
               </div>
               <div class="form-group">
                 <label><i class="fa-solid fa-users"></i> حالت بازی</label>
@@ -724,7 +729,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
               </div>
               <div class="form-group full">
                 <label><i class="fa-solid fa-align-right"></i> توضیحات کامل</label>
-                <textarea class="form-control" id="pDesc" required placeholder="توضیحات کامل بازی را وارد کنید..."></textarea>
+                <textarea class="form-control" id="pDesc" placeholder="توضیحات کامل بازی را وارد کنید..."></textarea>
               </div>
             </div>
             <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
@@ -767,28 +772,28 @@ const DEFAULT_PRODUCTS = [
   {
     id:1, name:"God of War Ragnarök", genre:"اکشن، ماجراجویی",
     image:"https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80",
-    video:"https://www.youtube.com/watch?v=EE-4GvjKcfs", rating:9.5, year:2022,
+    video:"https://www.youtube.com/watch?v=EE-4GvjKcfs", rating:"9.5", year:"2022",
     developer:"Santa Monica Studio", mode:"تک نفره", platforms:["ps4","pc"],
     desc:"God of War Ragnarök ادامه‌ای حماسی بر نسخه 2018 است. کریتوس و پسرش آترئوس در سفری اسطوره‌ای برای جلوگیری از راگناروک، پایان جهان نورس، قرار می‌گیرند. گرافیک خیره‌کننده، داستان عمیق و گیم‌پلی بی‌نظیر از ویژگی‌های این شاهکار است."
   },
   {
     id:2, name:"Cyberpunk 2077", genre:"اکشن، نقش‌آفرینی",
     image:"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80",
-    video:"https://www.youtube.com/watch?v=8Xvtay1s9aU", rating:8.7, year:2020,
+    video:"https://www.youtube.com/watch?v=8Xvtay1s9aU", rating:"8.7", year:"2020",
     developer:"CD Projekt Red", mode:"تک نفره", platforms:["pc","ps4","xbox"],
     desc:"در شهر نایت سیتی، جایی که قدرت، زرق و برق و تغییرات بدن ارزش بالایی دارد، شما در نقش V، یک مزدور خارج از قانون، به دنبال یک ایمپلنت منحصر به فرد هستید که کلید جاودانگی است. دنیایی باز، پر از انتخاب و پیامد."
   },
   {
     id:3, name:"Forza Horizon 5", genre:"مسابقه‌ای، جهان باز",
     image:"https://images.unsplash.com/photo-1511882150382-421056c89033?w=800&q=80",
-    video:"https://www.youtube.com/watch?v=FYH9n37B7Yw", rating:9.2, year:2021,
+    video:"https://www.youtube.com/watch?v=FYH9n37B7Yw", rating:"9.2", year:"2021",
     developer:"Playground Games", mode:"تک نفره / چندنفره", platforms:["pc","xbox"],
     desc:"سفری هیجان‌انگیز در مناظر زنده و پویای مکزیک با صدها خودروی فوق‌العاده. Forza Horizon 5 یکی از بهترین بازی‌های مسابقه‌ای جهان باز است که گرافیک نسل جدید را به رخ می‌کشد."
   },
   {
     id:4, name:"The Last of Us Part II", genre:"اکشن، بقا، درام",
     image:"https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
-    video:"https://www.youtube.com/watch?v=vBnlUq_t0xo", rating:9.3, year:2020,
+    video:"https://www.youtube.com/watch?v=vBnlUq_t0xo", rating:"9.3", year:"2020",
     developer:"Naughty Dog", mode:"تک نفره", platforms:["ps4"],
     desc:"پنج سال پس از اتفاقات نسخه اول، الی و جوئل در جکسون زندگی می‌کنند. اما وقتی یک اتفاق خشونت‌آمیز آرامش آن‌ها را بر هم می‌زند، الی در سفری بی‌رحمانه برای انتقام قرار می‌گیرد. یکی از احساسی‌ترین بازی‌های تاریخ."
   }
@@ -815,6 +820,14 @@ function toast(msg, type='success') {
   t.className = 'toast show ' + (type==='error' ? 'error' : '');
   t.innerHTML = `<i class="fa-solid ${type==='error'?'fa-circle-exclamation':'fa-circle-check'}"></i> ${msg}`;
   setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// تابع هوشمند برای تبدیل مقادیر خالی به "ثبت نشده"
+function safeValue(val) {
+  if (val === null || val === undefined || val.toString().trim() === '') {
+    return 'ثبت نشده';
+  }
+  return val.toString().trim();
 }
 
 /* ================================
@@ -859,7 +872,7 @@ function renderProducts() {
   grid.innerHTML = filtered.map(p => `
     <div class="product" onclick="openProduct(${p.id})">
       <div class="product-img">
-        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x250/1e3a8a/fff?text=The+Game'">
+        <img src="${safeValue(p.image)}" alt="${safeValue(p.name)}" onerror="this.src='https://via.placeholder.com/400x250/1e3a8a/fff?text=The+Game'">
         <div class="product-badges">
           ${p.platforms.map(pl => `<span class="badge ${pl}">${pl==='pc'?'PC':pl==='ps4'?'PS4':'XBOX'}</span>`).join('')}
         </div>
@@ -868,11 +881,11 @@ function renderProducts() {
         </div>
       </div>
       <div class="product-info">
-        <h3 class="product-title">${p.name}</h3>
-        <div class="product-genre"><i class="fa-solid fa-tag"></i> ${p.genre}</div>
+        <h3 class="product-title">${safeValue(p.name)}</h3>
+        <div class="product-genre"><i class="fa-solid fa-tag"></i> ${safeValue(p.genre)}</div>
         <div class="product-meta">
-          <div class="product-rating"><i class="fa-solid fa-star"></i> ${p.rating}</div>
-          <span style="font-size:0.8rem;color:var(--text-muted)">${p.year}</span>
+          <div class="product-rating"><i class="fa-solid fa-star"></i> ${safeValue(p.rating)}</div>
+          <span style="font-size:0.8rem;color:var(--text-muted)">${safeValue(p.year)}</span>
         </div>
       </div>
     </div>
@@ -913,32 +926,33 @@ function openProduct(id) {
   if (!p) return;
   
   const media = document.getElementById('modalMedia');
-  if (p.video) {
-    const ytId = extractYouTubeId(p.video);
+  const videoUrl = safeValue(p.video);
+  if (videoUrl !== 'ثبت نشده') {
+    const ytId = extractYouTubeId(videoUrl);
     media.innerHTML = ytId 
       ? `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=0" allowfullscreen></iframe>`
-      : `<img src="${p.image}" alt="${p.name}">`;
+      : `<img src="${safeValue(p.image)}" alt="${safeValue(p.name)}">`;
   } else {
-    media.innerHTML = `<img src="${p.image}" alt="${p.name}">`;
+    media.innerHTML = `<img src="${safeValue(p.image)}" alt="${safeValue(p.name)}">`;
   }
   
   document.getElementById('modalBody').innerHTML = `
-    <h2 class="modal-title">${p.name}</h2>
+    <h2 class="modal-title">${safeValue(p.name)}</h2>
     <div class="modal-badges">
       ${p.platforms.map(pl => `<span class="badge ${pl}" style="padding:6px 12px;font-size:0.8rem">${pl==='pc'?'PC':pl==='ps4'?'PS4':'XBOX'}</span>`).join('')}
     </div>
     <div class="modal-section">
       <h4><i class="fa-solid fa-circle-info"></i> توضیحات</h4>
-      <p class="modal-desc">${p.desc}</p>
+      <p class="modal-desc">${safeValue(p.desc)}</p>
     </div>
     <div class="modal-section">
       <h4><i class="fa-solid fa-chart-simple"></i> اطلاعات بازی</h4>
       <div class="info-grid">
-        <div class="info-item"><div class="label"><i class="fa-solid fa-tag"></i> ژانر</div><div class="value">${p.genre}</div></div>
-        <div class="info-item"><div class="label"><i class="fa-solid fa-star"></i> امتیاز</div><div class="value">${p.rating} / 10</div></div>
-        <div class="info-item"><div class="label"><i class="fa-solid fa-calendar"></i> سال انتشار</div><div class="value">${p.year}</div></div>
-        <div class="info-item"><div class="label"><i class="fa-solid fa-building"></i> سازنده</div><div class="value">${p.developer}</div></div>
-        <div class="info-item"><div class="label"><i class="fa-solid fa-users"></i> حالت بازی</div><div class="value">${p.mode || '-'}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-tag"></i> ژانر</div><div class="value">${safeValue(p.genre)}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-star"></i> امتیاز</div><div class="value">${safeValue(p.rating)}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-calendar"></i> سال انتشار</div><div class="value">${safeValue(p.year)}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-building"></i> سازنده</div><div class="value">${safeValue(p.developer)}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-users"></i> حالت بازی</div><div class="value">${safeValue(p.mode)}</div></div>
       </div>
     </div>
   `;
@@ -987,9 +1001,12 @@ document.querySelectorAll('.nav-menu a').forEach(a => {
 /* ================================
    پنل ادمین و آپلود عکس
    ================================ */
-document.getElementById('openAdmin').addEventListener('click', () => {
+// اتصال دکمه مدیریت در منوی موبایل و هدر (اگر وجود داشت) به یک تابع واحد
+function openAdminPanel() {
   document.getElementById('adminModal').classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.getElementById('navMenu').classList.remove('open'); // بستن منوی موبایل
+  
   if (isAdmin) {
     document.getElementById('loginView').style.display = 'none';
     document.getElementById('panelView').style.display = 'block';
@@ -998,12 +1015,16 @@ document.getElementById('openAdmin').addEventListener('click', () => {
     document.getElementById('loginView').style.display = 'block';
     document.getElementById('panelView').style.display = 'none';
   }
-});
+}
+
+document.getElementById('openAdminMobile').addEventListener('click', openAdminPanel);
 
 function doLogin() {
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value.trim();
-  if (u === 'admin' && p === 'admin123') {
+  
+  // رمزهای عبور جدید و مخفی
+  if (u === 'thegame12' && p === '12gamethe_!') {
     isAdmin = true;
     localStorage.setItem('tg_admin', 'true');
     document.getElementById('loginView').style.display = 'none';
@@ -1062,17 +1083,18 @@ function saveProduct(e) {
   const imageData = document.getElementById('pImageData').value;
   if (!imageData) { toast('لطفاً یک تصویر برای بازی انتخاب کنید', 'error'); return; }
   
+  // استفاده از تابع safeValue برای تبدیل خودکار خالی به "ثبت نشده"
   const data = {
     id: document.getElementById('productId').value ? parseInt(document.getElementById('productId').value) : Date.now(),
-    name: document.getElementById('pName').value.trim(),
-    genre: document.getElementById('pGenre').value.trim(),
+    name: safeValue(document.getElementById('pName').value) === 'ثبت نشده' ? 'بازی بدون نام' : safeValue(document.getElementById('pName').value),
+    genre: safeValue(document.getElementById('pGenre').value),
     image: imageData,
-    video: document.getElementById('pVideo').value.trim(),
-    rating: parseFloat(document.getElementById('pRating').value),
-    year: parseInt(document.getElementById('pYear').value),
-    developer: document.getElementById('pDeveloper').value.trim(),
-    mode: document.getElementById('pMode').value.trim(),
-    desc: document.getElementById('pDesc').value.trim(),
+    video: safeValue(document.getElementById('pVideo').value),
+    rating: safeValue(document.getElementById('pRating').value),
+    year: safeValue(document.getElementById('pYear').value),
+    developer: safeValue(document.getElementById('pDeveloper').value),
+    mode: safeValue(document.getElementById('pMode').value),
+    desc: safeValue(document.getElementById('pDesc').value),
     platforms
   };
   
@@ -1098,24 +1120,25 @@ function editProduct(id) {
   if (!p) return;
   
   document.getElementById('productId').value = p.id;
-  document.getElementById('pName').value = p.name;
-  document.getElementById('pGenre').value = p.genre;
+  document.getElementById('pName').value = p.name === 'ثبت نشده' || p.name === 'بازی بدون نام' ? '' : p.name;
+  document.getElementById('pGenre').value = p.genre === 'ثبت نشده' ? '' : p.genre;
   document.getElementById('pImageData').value = p.image;
   document.getElementById('pImagePreview').src = p.image;
   document.getElementById('uploadArea').classList.add('has-image');
-  document.getElementById('pVideo').value = p.video || '';
-  document.getElementById('pRating').value = p.rating;
-  document.getElementById('pYear').value = p.year;
-  document.getElementById('pDeveloper').value = p.developer;
-  document.getElementById('pMode').value = p.mode || '';
-  document.getElementById('pDesc').value = p.desc;
+  document.getElementById('pVideo').value = p.video === 'ثبت نشده' ? '' : p.video;
+  document.getElementById('pRating').value = p.rating === 'ثبت نشده' ? '' : p.rating;
+  document.getElementById('pYear').value = p.year === 'ثبت نشده' ? '' : p.year;
+  document.getElementById('pDeveloper').value = p.developer === 'ثبت نشده' ? '' : p.developer;
+  document.getElementById('pMode').value = p.mode === 'ثبت نشده' ? '' : p.mode;
+  document.getElementById('pDesc').value = p.desc === 'ثبت نشده' ? '' : p.desc;
+  
   document.querySelectorAll('.pPlatform').forEach(c => { c.checked = p.platforms.includes(c.value); });
   
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.admin-tab')[0].classList.add('active');
-  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
   document.getElementById('panel-add').classList.add('active');
-  toast('در حال ویرایش: ' + p.name);
+  toast('در حال ویرایش: ' + safeValue(p.name));
 }
 
 function deleteProduct(id) {
@@ -1144,10 +1167,10 @@ function renderAdminTable() {
   }
   tb.innerHTML = products.map(p => `
     <tr>
-      <td><img src="${p.image}" onerror="this.src='https://via.placeholder.com/50/1e3a8a/fff?text=IMG'"></td>
-      <td><strong>${p.name}</strong></td>
+      <td><img src="${safeValue(p.image)}" onerror="this.src='https://via.placeholder.com/50/1e3a8a/fff?text=IMG'"></td>
+      <td><strong>${safeValue(p.name)}</strong></td>
       <td>${p.platforms.map(pl => `<span class="badge ${pl}" style="padding:3px 8px;font-size:0.7rem;display:inline-flex">${pl.toUpperCase()}</span>`).join(' ')}</td>
-      <td><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${p.rating}</td>
+      <td><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${safeValue(p.rating)}</td>
       <td>
         <div class="action-btns">
           <button class="mini-btn edit" onclick="editProduct(${p.id})" title="ویرایش"><i class="fa-solid fa-pen"></i></button>
