@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Game | مرجع حرفه‌ای بازی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ================================
+   متغیرها و تنظیمات پایه (Woodmart Style)
+   ================================ */
+:root {
+  --primary: #1e3a8a;
+  --primary-dark: #0f172a;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --gold: #f59e0b;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg: #020617;
+  --surface: #0f172a;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; line-height: 1.6; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+button { cursor: pointer; border: none; font-family: inherit; transition: var(--transition); }
+img { max-width: 100%; display: block; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+/* ================================
+   هدر حرفه‌ای
+   ================================ */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+[data-theme="dark"] header { background: rgba(15, 23, 42, 0.9); }
+
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.5rem; color: var(--primary); }
+[data-theme="dark"] .logo { color: #fff; }
+.logo-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.logo span { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-theme="dark"] .logo span { background: linear-gradient(90deg, #60a5fa, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.nav-menu { display: flex; gap: 8px; list-style: none; }
+.nav-menu a {
+  padding: 8px 16px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; color: var(--text-muted);
+}
+.nav-menu a:hover, .nav-menu a.active { color: var(--accent); background: rgba(59, 130, 246, 0.08); }
+
+.nav-actions { display: flex; gap: 12px; align-items: center; }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
+.admin-btn {
+  background: var(--primary); color: #fff; padding: 8px 18px; border-radius: 10px;
+  font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+}
+.admin-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+.menu-toggle { display: none; }
+
+/* ================================
+   اسلایدر حرفه‌ای (Hero)
+   ================================ */
+.hero-slider { position: relative; height: 550px; overflow: hidden; }
+.slides { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+.slide {
+  min-width: 100%; height: 100%; position: relative;
+  display: flex; align-items: center; justify-content: center; text-align: center; color: #fff;
+}
+.slide-bg {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  filter: brightness(0.4); transform: scale(1.1); transition: transform 6s ease;
+}
+.slide.active .slide-bg { transform: scale(1); }
+.slide-content { position: relative; z-index: 2; padding: 20px; max-width: 700px; animation: fadeUp 0.8s ease; }
+.slide-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 30px; background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px);
+  font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; color: #fbbf24;
+}
+.slide-title { font-size: 3rem; font-weight: 900; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+.slide-desc { font-size: 1.1rem; opacity: 0.9; margin-bottom: 28px; line-height: 1.8; }
+.slide-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px; border-radius: 12px; background: #fbbf24; color: #0f172a;
+  font-weight: 700; font-size: 1rem; box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+}
+.slide-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(251, 191, 36, 0.4); }
+
+.slider-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; z-index: 3; backdrop-filter: blur(4px);
+}
+.slider-nav:hover { background: #fbbf24; color: #0f172a; border-color: #fbbf24; }
+.slider-nav.prev { right: 30px; }
+.slider-nav.next { left: 30px; }
+.slider-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: var(--transition); }
+.dot.active { background: #fbbf24; width: 32px; border-radius: 5px; }
+
+/* ================================
+   بخش‌ها و دسته‌بندی
+   ================================ */
+section { padding: 80px 0; }
+.section-head { text-align: center; margin-bottom: 48px; }
+.section-tag {
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  background: rgba(59, 130, 246, 0.1); color: var(--accent);
+  font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; border: 1px solid rgba(59, 130, 246, 0.2);
+}
+.section-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
+.section-title span { color: var(--accent); }
+.section-desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+.categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cat-card {
+  position: relative; padding: 32px 24px; border-radius: var(--radius-lg);
+  background: var(--surface); border: 1px solid var(--border);
+  text-align: center; transition: var(--transition); cursor: pointer; overflow: hidden;
+}
+.cat-card::before {
+  content: ""; position: absolute; top: 0; right: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease;
+}
+.cat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+.cat-card:hover::before { transform: scaleX(1); }
+.cat-icon {
+  width: 72px; height: 72px; border-radius: 16px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(30,58,138,0.1));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--accent); transition: var(--transition);
+}
+.cat-card:hover .cat-icon { transform: scale(1.1) rotate(-5deg); background: var(--accent); color: #fff; }
+.cat-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+.cat-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; }
+.cat-count { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--bg); color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+
+/* ================================
+   محصولات (Woodmart Style)
+   ================================ */
+.filter-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 10px 22px; border-radius: 30px; background: var(--surface);
+  color: var(--text-muted); border: 1px solid var(--border); font-weight: 600; font-size: 0.9rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3); }
+
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.product {
+  background: var(--surface); border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border); transition: var(--transition); position: relative;
+}
+.product:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+.product-img { position: relative; height: 240px; overflow: hidden; background: #1e293b; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.product:hover .product-img img { transform: scale(1.08); }
+.product-badges { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px; }
+.badge {
+  padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; color: #fff;
+  display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px);
+}
+.badge.pc { background: #3b82f6; }
+.badge.ps4 { background: #003087; }
+.badge.xbox { background: #107c10; }
+
+.product-actions {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  display: flex; justify-content: center; transform: translateY(100%); transition: transform 0.3s ease;
+}
+.product:hover .product-actions { transform: translateY(0); }
+.action-btn {
+  padding: 10px 20px; border-radius: 8px; background: #fff; color: #0f172a;
+  font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;
+}
+.action-btn:hover { background: var(--gold); }
+
+.product-info { padding: 20px; }
+.product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-genre { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.product-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
+.product-rating { display: flex; align-items: center; gap: 4px; color: var(--gold); font-weight: 700; font-size: 0.9rem; }
+
+/* ================================
+   تماس با ما و فوتر
+   ================================ */
+.contact-box {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-radius: 24px; padding: 60px 40px; text-align: center; color: #fff;
+  position: relative; overflow: hidden; margin: 40px 0;
+}
+.contact-box::before {
+  content: ""; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(251,191,36,0.15), transparent);
+}
+.contact-box h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; position: relative; }
+.contact-box p { opacity: 0.9; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; }
+.socials { display: flex; gap: 16px; justify-content: center; position: relative; }
+.social {
+  width: 56px; height: 56px; border-radius: 16px; background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #fff; backdrop-filter: blur(8px);
+}
+.social:hover { transform: translateY(-6px); }
+.social.wa:hover { background: #25d366; border-color: #25d366; box-shadow: 0 10px 20px rgba(37,211,102,0.3); }
+.social.ig:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: transparent; box-shadow: 0 10px 20px rgba(220,39,67,0.3); }
+.social.fb:hover { background: #1877f2; border-color: #1877f2; box-shadow: 0 10px 20px rgba(24,119,242,0.3); }
+.social.tg:hover { background: #0088cc; border-color: #0088cc; box-shadow: 0 10px 20px rgba(0,136,204,0.3); }
+
+footer { background: var(--primary-dark); color: #94a3b8; padding: 60px 0 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand h3 { color: #fff; font-size: 1.5rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.footer-brand p { line-height: 1.8; font-size: 0.95rem; }
+.footer-col h4 { color: #fff; font-size: 1.1rem; margin-bottom: 20px; font-weight: 700; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a { font-size: 0.95rem; transition: var(--transition); }
+.footer-col a:hover { color: var(--gold); padding-right: 6px; }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.9rem;
+}
+.footer-bottom .heart { color: #ef4444; animation: beat 1.5s infinite; display: inline-block; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+/* ================================
+   مودال‌ها (Professional)
+   ================================ */
+.modal {
+  position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
+  display: none; align-items: center; justify-content: center;
+  z-index: 1000; padding: 20px; backdrop-filter: blur(8px);
+}
+.modal.active { display: flex; animation: fadeIn 0.3s ease; }
+.modal-box {
+  background: var(--surface); border-radius: 20px; max-width: 900px; width: 100%;
+  max-height: 90vh; overflow-y: auto; position: relative;
+  border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-close {
+  position: absolute; top: 16px; left: 16px; z-index: 10;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,0.5); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: var(--transition);
+}
+.modal-close:hover { background: #ef4444; transform: rotate(90deg); }
+
+.modal-media { position: relative; height: 400px; overflow: hidden; background: #000; }
+.modal-media iframe { width: 100%; height: 100%; border: 0; }
+.modal-media img { width: 100%; height: 100%; object-fit: cover; }
+.modal-media::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+  background: linear-gradient(to top, var(--surface), transparent);
+}
+.modal-body { padding: 32px; }
+.modal-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 16px; }
+.modal-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.modal-section { margin-bottom: 28px; }
+.modal-section h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: var(--accent); }
+.modal-section h4 i {
+  width: 32px; height: 32px; border-radius: 8px; background: rgba(59,130,246,0.1);
+  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+}
+.modal-desc { color: var(--text-muted); line-height: 1.9; font-size: 1rem; text-align: justify; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+.info-item { padding: 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border); }
+.info-item .label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.info-item .value { font-weight: 700; font-size: 1rem; }
+
+/* ================================
+   پنل مدیریت (پیشرفته)
+   ================================ */
+.admin-modal .modal-box { max-width: 1000px; }
+.admin-head {
+  padding: 24px 32px; background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff; display: flex; justify-content: space-between; align-items: center;
+  border-radius: 20px 20px 0 0;
+}
+.admin-body { padding: 32px; }
+.admin-tabs { display: flex; gap: 8px; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.admin-tab {
+  padding: 10px 20px; background: none; color: var(--text-muted);
+  font-weight: 600; border-bottom: 2px solid transparent; transition: var(--transition);
+}
+.admin-tab.active { color: var(--accent); border-color: var(--accent); }
+.admin-panel { display: none; animation: fadeIn 0.3s ease; }
+.admin-panel.active { display: block; }
+
+/* فرم آپلود عکس حرفه‌ای */
+.upload-area {
+  border: 2px dashed var(--border); border-radius: 12px; padding: 32px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  background: var(--bg); position: relative; overflow: hidden;
+}
+.upload-area:hover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+.upload-area.has-image { padding: 12px; border-style: solid; border-color: var(--accent); }
+.upload-icon { font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; }
+.upload-text { color: var(--text-muted); font-size: 0.95rem; }
+.upload-text span { color: var(--accent); font-weight: 600; text-decoration: underline; }
+.upload-preview { width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; display: none; }
+.upload-area.has-image .upload-icon, .upload-area.has-image .upload-text { display: none; }
+.upload-area.has-image .upload-preview { display: block; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; color: var(--text); }
+.form-group label i { color: var(--accent); font-size: 0.85rem; }
+.form-control {
+  padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font-size: 0.95rem; transition: var(--transition);
+}
+.form-control:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+textarea.form-control { resize: vertical; min-height: 100px; }
+
+.platforms-check { display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0; }
+.platform-check {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); transition: var(--transition);
+}
+.platform-check:hover { border-color: var(--accent); }
+.platform-check input { width: 16px; height: 16px; accent-color: var(--accent); }
+.platform-check:has(input:checked) { background: rgba(59,130,246,0.1); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+.btn { padding: 12px 24px; border-radius: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59,130,246,0.3); }
+.btn-danger { background: #ef4444; color: #fff; }
+.btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
+.btn-ghost { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--border); }
+
+/* جدول مدیریت */
+.table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+.admin-table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 600px; }
+.admin-table th, .admin-table td { padding: 16px; text-align: right; border-bottom: 1px solid var(--border); }
+.admin-table th { background: var(--bg); font-weight: 700; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.admin-table tr:hover { background: rgba(59,130,246,0.03); }
+.admin-table img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+.action-btns { display: flex; gap: 8px; }
+.mini-btn {
+  width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.85rem; transition: var(--transition);
+}
+.mini-btn.edit { background: var(--accent); }
+.mini-btn.edit:hover { background: #1d4ed8; transform: scale(1.1); }
+.mini-btn.delete { background: #ef4444; }
+.mini-btn.delete:hover { background: #dc2626; transform: scale(1.1); }
+
+/* لاگین */
+.login-box { max-width: 400px; margin: 40px auto; padding: 40px 32px; background: var(--surface); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); text-align: center; }
+.login-box i.main-icon { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
+.login-box h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.login-box p { color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 30px; z-index: 2000;
+  padding: 14px 24px; border-radius: 12px; color: #fff; font-weight: 600;
+  background: #10b981; box-shadow: 0 10px 30px rgba(16,185,129,0.3);
+  transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex; align-items: center; gap: 10px; font-size: 0.95rem;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.error { background: #ef4444; box-shadow: 0 10px 30px rgba(239,68,68,0.3); }
+
+/* ================================
+   ریسپانسیو (موبایل و تبلت)
+   ================================ */
+@media (max-width: 960px) {
+  .categories { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .hero-slider { height: 450px; }
+  .slide-title { font-size: 2.2rem; }
+}
+
+@media (max-width: 640px) {
+  .nav-menu {
+    position: fixed; top: 72px; right: -100%; width: 85%; height: calc(100vh - 72px);
+    background: var(--surface); flex-direction: column; padding: 24px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 99;
+  }
+  .nav-menu.open { right: 0; }
+  .nav-menu a { padding: 14px 16px; font-size: 1.1rem; border-bottom: 1px solid var(--border); }
+  .menu-toggle { display: flex; }
+  
+  .hero-slider { height: 400px; }
+  .slide-title { font-size: 1.8rem; }
+  .slide-desc { font-size: 0.95rem; }
+  .slider-nav { width: 36px; height: 36px; font-size: 0.9rem; }
+  .slider-nav.prev { right: 12px; }
+  .slider-nav.next { left: 12px; }
+  
+  section { padding: 50px 0; }
+  .section-title { font-size: 1.6rem; }
+  
+  .products { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .product-img { height: 160px; }
+  .product-info { padding: 12px; }
+  .product-title { font-size: 0.95rem; }
+  .product-actions { transform: translateY(0); position: static; background: none; padding: 0 12px 12px; }
+  .action-btn { width: 100%; justify-content: center; background: var(--bg); border: 1px solid var(--border); font-size: 0.8rem; padding: 8px; }
+  
+  .contact-box { padding: 40px 20px; border-radius: 16px; }
+  .contact-box h2 { font-size: 1.5rem; }
+  .socials { gap: 12px; }
+  .social { width: 48px; height: 48px; font-size: 1.2rem; }
+  
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  
+  .admin-body { padding: 20px; }
+  .admin-head { padding: 20px; }
+  .admin-head h2 { font-size: 1.1rem; }
+  .modal-media { height: 250px; }
+  .modal-body { padding: 20px; }
+  .modal-title { font-size: 1.3rem; }
+  .info-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info-item { padding: 12px; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+</style>
+</head>
+<body>
+
+<!-- هدر -->
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-gamepad"></i></div>
+      <span>The Game</span>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home" class="active">خانه</a></li>
+      <li><a href="#categories">دسته‌بندی</a></li>
+      <li><a href="#products">بازی‌ها</a></li>
+      <li><a href="#contact">تماس با ما</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" title="تغییر تم"><i class="fa-solid fa-moon"></i></button>
+      <button class="admin-btn" id="openAdmin"><i class="fa-solid fa-user-shield"></i> <span class="hide-mobile">مدیریت</span></button>
+      <button class="icon-btn menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- اسلایدر -->
+<section class="hero-slider" id="home" style="padding:0">
+  <div class="slides" id="slides">
+    <div class="slide active">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600&q=80')"></div>
+      <div class="slide-content">
+        <div class="slide-badge"><i class="fa-solid fa-desktop"></i> نسخه PC</div>
+        <h1 class="slide-title">دنیای بازی‌های کامپیوتر</h1>
+        <p class="slide-desc">بهترین و جدیدترین بازی‌های PC را با بالاترین کیفیت گرافیکی در The Game کشف کنید.</p>
+        <a href="#products" class="slide-btn">مشاهده بازی‌ها <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=1600&q=80')"></div>
+      <div class="slide-content">
+        <div class="slide-badge"><i class="fa-brands fa-playstation"></i> نسخه PS4</div>
+        <h1 class="slide-title">کنسول PlayStation 4</h1>
+        <p class="slide-desc">مجموعه‌ای کامل از بازی‌های انحصاری و محبوب پلی‌استیشن 4 را تجربه کنید.</p>
+        <a href="#products" class="slide-btn">مشاهده بازی‌ها <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1600658273159-e1e92f28e89d?w=1600&q=80')"></div>
+      <div class="slide-content">
+        <div class="slide-badge"><i class="fa-brands fa-xbox"></i> نسخه Xbox</div>
+        <h1 class="slide-title">کنسول Xbox</h1>
+        <p class="slide-desc">دنیای بی‌پایان بازی‌های ایکس‌باکس با گرافیک نسل جدید و گیم‌پس بی‌نظیر.</p>
+        <a href="#products" class="slide-btn">مشاهده بازی‌ها <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </div>
+  </div>
+  <button class="slider-nav prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-right"></i></button>
+  <button class="slider-nav next" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-left"></i></button>
+  <div class="slider-dots" id="dots"></div>
+</section>
+
+<!-- دسته‌بندی -->
+<section id="categories">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">دسته‌بندی پلتفرم‌ها</div>
+      <h2 class="section-title">پلتفرم <span>مورد علاقه</span> خود را انتخاب کنید</h2>
+      <p class="section-desc">بازی‌ها را بر اساس پلتفرم دلخواه خود فیلتر و مشاهده کنید</p>
+    </div>
+    <div class="categories">
+      <div class="cat-card" onclick="filterByPlatform('pc')">
+        <div class="cat-icon"><i class="fa-solid fa-desktop"></i></div>
+        <h3>PC - کامپیوتر</h3>
+        <p>بازی‌های کامپیوتر با بالاترین کیفیت گرافیکی</p>
+        <div class="cat-count" id="count-pc">0 بازی</div>
+      </div>
+      <div class="cat-card" onclick="filterByPlatform('ps4')">
+        <div class="cat-icon"><i class="fa-brands fa-playstation"></i></div>
+        <h3>PS4 - پلی‌استیشن</h3>
+        <p>بازی‌های انحصاری و محبوب پلی‌استیشن 4</p>
+        <div class="cat-count" id="count-ps4">0 بازی</div>
+      </div>
+      <div class="cat-card" onclick="filterByPlatform('xbox')">
+        <div class="cat-icon"><i class="fa-brands fa-xbox"></i></div>
+        <h3>Xbox - ایکس‌باکس</h3>
+        <p>بهترین بازی‌های کنسول ایکس‌باکس مایکروسافت</p>
+        <div class="cat-count" id="count-xbox">0 بازی</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- محصولات -->
+<section id="products" style="background: var(--bg);">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">مجموعه بازی‌ها</div>
+      <h2 class="section-title">جدیدترین <span>بازی‌ها</span></h2>
+      <p class="section-desc">مجموعه‌ای از بهترین و محبوب‌ترین بازی‌های روز دنیا</p>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all"><i class="fa-solid fa-border-all"></i> همه</button>
+      <button class="filter-btn" data-filter="pc"><i class="fa-solid fa-desktop"></i> PC</button>
+      <button class="filter-btn" data-filter="ps4"><i class="fa-brands fa-playstation"></i> PS4</button>
+      <button class="filter-btn" data-filter="xbox"><i class="fa-brands fa-xbox"></i> Xbox</button>
+    </div>
+    <div class="products" id="productsGrid"></div>
+  </div>
+</section>
+
+<!-- تماس با ما -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <h2><i class="fa-solid fa-headset"></i> ارتباط با ما</h2>
+      <p>برای دریافت اطلاعات بیشتر، مشاوره و ارتباط با تیم The Game از طریق شبکه‌های اجتماعی زیر با ما در تماس باشید. ما همیشه آماده پاسخگویی به شما هستیم.</p>
+      <div class="socials">
+        <a href="https://wa.me/989123456789" target="_blank" class="social wa" title="واتساپ"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://instagram.com/thegame" target="_blank" class="social ig" title="اینستاگرام"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://facebook.com/thegame" target="_blank" class="social fb" title="فیسبوک"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://t.me/thegame" target="_blank" class="social tg" title="تلگرام"><i class="fa-brands fa-telegram"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- فوتر -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3><i class="fa-solid fa-gamepad" style="color:var(--gold)"></i> The Game</h3>
+        <p>مرجع کامل معرفی بازی‌های کامپیوتر، پلی‌استیشن و ایکس‌باکس. ما اینجاییم تا بهترین تجربه گیمینگ را به شما معرفی کنیم.</p>
+      </div>
+      <div class="footer-col">
+        <h4>دسترسی سریع</h4>
+        <ul>
+          <li><a href="#home">خانه</a></li>
+          <li><a href="#categories">دسته‌بندی</a></li>
+          <li><a href="#products">محصولات</a></li>
+          <li><a href="#contact">تماس با ما</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>پلتفرم‌ها</h4>
+        <ul>
+          <li><a href="#" onclick="filterByPlatform('pc')">PC - کامپیوتر</a></li>
+          <li><a href="#" onclick="filterByPlatform('ps4')">PS4 - پلی‌استیشن</a></li>
+          <li><a href="#" onclick="filterByPlatform('xbox')">Xbox - ایکس‌باکس</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 <strong>The Game</strong> - تمامی حقوق محفوظ است</div>
+      <div>Made with <span class="heart">❤</span> by <strong style="color:var(--gold)">Nexa AF</strong></div>
+    </div>
+  </div>
+</footer>
+
+<!-- مودال جزئیات محصول -->
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('productModal')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-media" id="modalMedia"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- مودال ادمین -->
+<div class="modal admin-modal" id="adminModal">
+  <div class="modal-box">
+    <div class="admin-head">
+      <h2><i class="fa-solid fa-user-shield"></i> پنل مدیریت The Game</h2>
+      <button class="modal-close" style="position:static;background:rgba(255,255,255,0.2)" onclick="closeModal('adminModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="admin-body">
+      <!-- لاگین -->
+      <div id="loginView">
+        <div class="login-box">
+          <i class="fa-solid fa-lock main-icon"></i>
+          <h3>ورود به پنل مدیریت</h3>
+          <p>برای دسترسی به پنل مدیریت، اطلاعات خود را وارد کنید</p>
+          <div class="form-group" style="text-align:right; margin-bottom:16px">
+            <label><i class="fa-solid fa-user"></i> نام کاربری</label>
+            <input type="text" class="form-control" id="loginUser" placeholder="admin">
+          </div>
+          <div class="form-group" style="text-align:right; margin-bottom:24px">
+            <label><i class="fa-solid fa-key"></i> رمز عبور</label>
+            <input type="password" class="form-control" id="loginPass" placeholder="••••••••">
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="doLogin()">
+            <i class="fa-solid fa-right-to-bracket"></i> ورود
+          </button>
+          <p style="margin-top:16px;font-size:0.85rem;color:var(--text-muted)">پیش‌فرض: admin / admin123</p>
+        </div>
+      </div>
+      
+      <!-- پنل -->
+      <div id="panelView" style="display:none">
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchTab('add')"><i class="fa-solid fa-plus"></i> افزودن محصول</button>
+          <button class="admin-tab" onclick="switchTab('list')"><i class="fa-solid fa-list"></i> مدیریت محصولات</button>
+          <button class="admin-tab" onclick="doLogout()" style="margin-right:auto;color:#ef4444"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+        </div>
+        
+        <!-- فرم افزودن/ویرایش -->
+        <div class="admin-panel active" id="panel-add">
+          <form id="productForm" onsubmit="saveProduct(event)">
+            <input type="hidden" id="productId">
+            <input type="hidden" id="pImageData">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label><i class="fa-solid fa-image"></i> تصویر بازی (کلیک کنید تا انتخاب شود)</label>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('pImageFile').click()">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                  <div class="upload-text">برای آپلود عکس <span>کلیک کنید</span> یا فایل را اینجا رها کنید<br><small style="opacity:0.7">فرمت‌های مجاز: JPG, PNG, WebP (حداکثر 1 مگابایت)</small></div>
+                  <img class="upload-preview" id="pImagePreview" alt="پیش‌نمایش">
+                </div>
+                <input type="file" id="pImageFile" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fa-solid fa-heading"></i> نام بازی</label>
+                <input type="text" class="form-control" id="pName" required placeholder="مثال: God of War">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-tag"></i> ژانر</label>
+                <input type="text" class="form-control" id="pGenre" required placeholder="مثال: اکشن، ماجراجویی">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-brands fa-youtube"></i> لینک ویدیو یوتیوب (اختیاری)</label>
+                <input type="url" class="form-control" id="pVideo" placeholder="https://youtube.com/watch?v=...">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-star"></i> امتیاز (از 10)</label>
+                <input type="number" class="form-control" id="pRating" min="0" max="10" step="0.1" required placeholder="9.2">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-calendar"></i> سال انتشار</label>
+                <input type="number" class="form-control" id="pYear" required placeholder="2024">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-building"></i> سازنده</label>
+                <input type="text" class="form-control" id="pDeveloper" required placeholder="مثال: Santa Monica">
+              </div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-users"></i> حالت بازی</label>
+                <input type="text" class="form-control" id="pMode" placeholder="تک نفره / چندنفره">
+              </div>
+              <div class="form-group full">
+                <label><i class="fa-solid fa-gamepad"></i> پلتفرم‌ها</label>
+                <div class="platforms-check">
+                  <label class="platform-check"><input type="checkbox" value="pc" class="pPlatform"> <i class="fa-solid fa-desktop"></i> PC</label>
+                  <label class="platform-check"><input type="checkbox" value="ps4" class="pPlatform"> <i class="fa-brands fa-playstation"></i> PS4</label>
+                  <label class="platform-check"><input type="checkbox" value="xbox" class="pPlatform"> <i class="fa-brands fa-xbox"></i> Xbox</label>
+                </div>
+              </div>
+              <div class="form-group full">
+                <label><i class="fa-solid fa-align-right"></i> توضیحات کامل</label>
+                <textarea class="form-control" id="pDesc" required placeholder="توضیحات کامل بازی را وارد کنید..."></textarea>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> ذخیره محصول</button>
+              <button type="button" class="btn btn-ghost" onclick="resetForm()"><i class="fa-solid fa-rotate-left"></i> پاک کردن فرم</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- لیست محصولات -->
+        <div class="admin-panel" id="panel-list">
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>تصویر</th>
+                  <th>نام</th>
+                  <th>پلتفرم</th>
+                  <th>امتیاز</th>
+                  <th>عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="adminTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================================
+   داده‌های پیش‌فرض و وضعیت
+   ================================ */
+const DEFAULT_PRODUCTS = [
+  {
+    id:1, name:"God of War Ragnarök", genre:"اکشن، ماجراجویی",
+    image:"https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80",
+    video:"https://www.youtube.com/watch?v=EE-4GvjKcfs", rating:9.5, year:2022,
+    developer:"Santa Monica Studio", mode:"تک نفره", platforms:["ps4","pc"],
+    desc:"God of War Ragnarök ادامه‌ای حماسی بر نسخه 2018 است. کریتوس و پسرش آترئوس در سفری اسطوره‌ای برای جلوگیری از راگناروک، پایان جهان نورس، قرار می‌گیرند. گرافیک خیره‌کننده، داستان عمیق و گیم‌پلی بی‌نظیر از ویژگی‌های این شاهکار است."
+  },
+  {
+    id:2, name:"Cyberpunk 2077", genre:"اکشن، نقش‌آفرینی",
+    image:"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80",
+    video:"https://www.youtube.com/watch?v=8Xvtay1s9aU", rating:8.7, year:2020,
+    developer:"CD Projekt Red", mode:"تک نفره", platforms:["pc","ps4","xbox"],
+    desc:"در شهر نایت سیتی، جایی که قدرت، زرق و برق و تغییرات بدن ارزش بالایی دارد، شما در نقش V، یک مزدور خارج از قانون، به دنبال یک ایمپلنت منحصر به فرد هستید که کلید جاودانگی است. دنیایی باز، پر از انتخاب و پیامد."
+  },
+  {
+    id:3, name:"Forza Horizon 5", genre:"مسابقه‌ای، جهان باز",
+    image:"https://images.unsplash.com/photo-1511882150382-421056c89033?w=800&q=80",
+    video:"https://www.youtube.com/watch?v=FYH9n37B7Yw", rating:9.2, year:2021,
+    developer:"Playground Games", mode:"تک نفره / چندنفره", platforms:["pc","xbox"],
+    desc:"سفری هیجان‌انگیز در مناظر زنده و پویای مکزیک با صدها خودروی فوق‌العاده. Forza Horizon 5 یکی از بهترین بازی‌های مسابقه‌ای جهان باز است که گرافیک نسل جدید را به رخ می‌کشد."
+  },
+  {
+    id:4, name:"The Last of Us Part II", genre:"اکشن، بقا، درام",
+    image:"https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
+    video:"https://www.youtube.com/watch?v=vBnlUq_t0xo", rating:9.3, year:2020,
+    developer:"Naughty Dog", mode:"تک نفره", platforms:["ps4"],
+    desc:"پنج سال پس از اتفاقات نسخه اول، الی و جوئل در جکسون زندگی می‌کنند. اما وقتی یک اتفاق خشونت‌آمیز آرامش آن‌ها را بر هم می‌زند، الی در سفری بی‌رحمانه برای انتقام قرار می‌گیرد. یکی از احساسی‌ترین بازی‌های تاریخ."
+  }
+];
+
+let products = JSON.parse(localStorage.getItem('tg_products')) || DEFAULT_PRODUCTS;
+let currentSlide = 0;
+let currentFilter = 'all';
+let isAdmin = localStorage.getItem('tg_admin') === 'true';
+
+/* ================================
+   توابع کمکی
+   ================================ */
+function saveProducts() {
+  try {
+    localStorage.setItem('tg_products', JSON.stringify(products));
+  } catch (e) {
+    toast('حافظه مرورگر پر شده است! لطفاً برخی محصولات را حذف کنید.', 'error');
+  }
+}
+
+function toast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.className = 'toast show ' + (type==='error' ? 'error' : '');
+  t.innerHTML = `<i class="fa-solid ${type==='error'?'fa-circle-exclamation':'fa-circle-check'}"></i> ${msg}`;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ================================
+   اسلایدر
+   ================================ */
+function initSlider() {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0 ? ' active' : '');
+    d.onclick = () => goToSlide(i);
+    dots.appendChild(d);
+  });
+  setInterval(() => changeSlide(1), 6000);
+}
+function goToSlide(i) {
+  currentSlide = i;
+  document.getElementById('slides').style.transform = `translateX(${i * 100}%)`;
+  document.querySelectorAll('.slide').forEach((s, idx) => s.classList.toggle('active', idx===i));
+  document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx===i));
+}
+function changeSlide(dir) {
+  const total = document.querySelectorAll('.slide').length;
+  currentSlide = (currentSlide + dir + total) % total;
+  goToSlide(currentSlide);
+}
+
+/* ================================
+   رندر محصولات
+   ================================ */
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const filtered = currentFilter === 'all' ? products : products.filter(p => p.platforms.includes(currentFilter));
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted)"><i class="fa-solid fa-box-open" style="font-size:3rem;margin-bottom:16px;opacity:0.4;display:block"></i><h3>بازی‌ای یافت نشد</h3></div>`;
+    return;
+  }
+  
+  grid.innerHTML = filtered.map(p => `
+    <div class="product" onclick="openProduct(${p.id})">
+      <div class="product-img">
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x250/1e3a8a/fff?text=The+Game'">
+        <div class="product-badges">
+          ${p.platforms.map(pl => `<span class="badge ${pl}">${pl==='pc'?'PC':pl==='ps4'?'PS4':'XBOX'}</span>`).join('')}
+        </div>
+        <div class="product-actions">
+          <button class="action-btn"><i class="fa-regular fa-eye"></i> مشاهده جزئیات</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-title">${p.name}</h3>
+        <div class="product-genre"><i class="fa-solid fa-tag"></i> ${p.genre}</div>
+        <div class="product-meta">
+          <div class="product-rating"><i class="fa-solid fa-star"></i> ${p.rating}</div>
+          <span style="font-size:0.8rem;color:var(--text-muted)">${p.year}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterByPlatform(pl) {
+  currentFilter = pl;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === pl);
+  });
+  renderProducts();
+  document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.filter;
+  renderProducts();
+});
+
+function updateCounts() {
+  ['pc','ps4','xbox'].forEach(pl => {
+    const c = products.filter(p => p.platforms.includes(pl)).length;
+    const el = document.getElementById('count-'+pl);
+    if (el) el.textContent = c + ' بازی';
+  });
+}
+
+/* ================================
+   مودال جزئیات
+   ================================ */
+function openProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  
+  const media = document.getElementById('modalMedia');
+  if (p.video) {
+    const ytId = extractYouTubeId(p.video);
+    media.innerHTML = ytId 
+      ? `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=0" allowfullscreen></iframe>`
+      : `<img src="${p.image}" alt="${p.name}">`;
+  } else {
+    media.innerHTML = `<img src="${p.image}" alt="${p.name}">`;
+  }
+  
+  document.getElementById('modalBody').innerHTML = `
+    <h2 class="modal-title">${p.name}</h2>
+    <div class="modal-badges">
+      ${p.platforms.map(pl => `<span class="badge ${pl}" style="padding:6px 12px;font-size:0.8rem">${pl==='pc'?'PC':pl==='ps4'?'PS4':'XBOX'}</span>`).join('')}
+    </div>
+    <div class="modal-section">
+      <h4><i class="fa-solid fa-circle-info"></i> توضیحات</h4>
+      <p class="modal-desc">${p.desc}</p>
+    </div>
+    <div class="modal-section">
+      <h4><i class="fa-solid fa-chart-simple"></i> اطلاعات بازی</h4>
+      <div class="info-grid">
+        <div class="info-item"><div class="label"><i class="fa-solid fa-tag"></i> ژانر</div><div class="value">${p.genre}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-star"></i> امتیاز</div><div class="value">${p.rating} / 10</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-calendar"></i> سال انتشار</div><div class="value">${p.year}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-building"></i> سازنده</div><div class="value">${p.developer}</div></div>
+        <div class="info-item"><div class="label"><i class="fa-solid fa-users"></i> حالت بازی</div><div class="value">${p.mode || '-'}</div></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('productModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+  if (id === 'productModal') document.getElementById('modalMedia').innerHTML = '';
+}
+
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+
+/* ================================
+   مدیریت تم و منو
+   ================================ */
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  themeToggle.innerHTML = t === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  localStorage.setItem('tg_theme', t);
+}
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+applyTheme(localStorage.getItem('tg_theme') || 'light');
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.querySelectorAll('.nav-menu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'));
+});
+
+/* ================================
+   پنل ادمین و آپلود عکس
+   ================================ */
+document.getElementById('openAdmin').addEventListener('click', () => {
+  document.getElementById('adminModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (isAdmin) {
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('panelView').style.display = 'block';
+    renderAdminTable();
+  } else {
+    document.getElementById('loginView').style.display = 'block';
+    document.getElementById('panelView').style.display = 'none';
+  }
+});
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  if (u === 'admin' && p === 'admin123') {
+    isAdmin = true;
+    localStorage.setItem('tg_admin', 'true');
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('panelView').style.display = 'block';
+    renderAdminTable();
+    toast('خوش آمدید، مدیر عزیز!');
+  } else {
+    toast('نام کاربری یا رمز عبور اشتباه است', 'error');
+  }
+}
+
+function doLogout() {
+  isAdmin = false;
+  localStorage.removeItem('tg_admin');
+  closeModal('adminModal');
+  toast('با موفقیت خارج شدید');
+}
+
+function switchTab(t) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  event.target.closest('.admin-tab').classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + t).classList.add('active');
+  if (t === 'list') renderAdminTable();
+}
+
+/* آپلود عکس با FileReader */
+function handleImageUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  if (file.size > 1024 * 1024) {
+    toast('حجم عکس نباید بیشتر از 1 مگابایت باشد', 'error');
+    input.value = '';
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    document.getElementById('pImageData').value = base64;
+    document.getElementById('pImagePreview').src = base64;
+    document.getElementById('uploadArea').classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ================================
+   CRUD محصولات
+   ================================ */
+function saveProduct(e) {
+  e.preventDefault();
+  const platforms = Array.from(document.querySelectorAll('.pPlatform:checked')).map(c => c.value);
+  if (platforms.length === 0) { toast('حداقل یک پلتفرم انتخاب کنید', 'error'); return; }
+  
+  const imageData = document.getElementById('pImageData').value;
+  if (!imageData) { toast('لطفاً یک تصویر برای بازی انتخاب کنید', 'error'); return; }
+  
+  const data = {
+    id: document.getElementById('productId').value ? parseInt(document.getElementById('productId').value) : Date.now(),
+    name: document.getElementById('pName').value.trim(),
+    genre: document.getElementById('pGenre').value.trim(),
+    image: imageData,
+    video: document.getElementById('pVideo').value.trim(),
+    rating: parseFloat(document.getElementById('pRating').value),
+    year: parseInt(document.getElementById('pYear').value),
+    developer: document.getElementById('pDeveloper').value.trim(),
+    mode: document.getElementById('pMode').value.trim(),
+    desc: document.getElementById('pDesc').value.trim(),
+    platforms
+  };
+  
+  const editId = document.getElementById('productId').value;
+  if (editId) {
+    const idx = products.findIndex(p => p.id === parseInt(editId));
+    if (idx > -1) products[idx] = data;
+    toast('محصول با موفقیت ویرایش شد');
+  } else {
+    products.push(data);
+    toast('محصول جدید اضافه شد');
+  }
+  
+  saveProducts();
+  renderProducts();
+  updateCounts();
+  renderAdminTable();
+  resetForm();
+}
+
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  
+  document.getElementById('productId').value = p.id;
+  document.getElementById('pName').value = p.name;
+  document.getElementById('pGenre').value = p.genre;
+  document.getElementById('pImageData').value = p.image;
+  document.getElementById('pImagePreview').src = p.image;
+  document.getElementById('uploadArea').classList.add('has-image');
+  document.getElementById('pVideo').value = p.video || '';
+  document.getElementById('pRating').value = p.rating;
+  document.getElementById('pYear').value = p.year;
+  document.getElementById('pDeveloper').value = p.developer;
+  document.getElementById('pMode').value = p.mode || '';
+  document.getElementById('pDesc').value = p.desc;
+  document.querySelectorAll('.pPlatform').forEach(c => { c.checked = p.platforms.includes(c.value); });
+  
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.admin-tab')[0].classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-add').classList.add('active');
+  toast('در حال ویرایش: ' + p.name);
+}
+
+function deleteProduct(id) {
+  if (!confirm('آیا از حذف این محصول مطمئن هستید؟')) return;
+  products = products.filter(p => p.id !== id);
+  saveProducts();
+  renderProducts();
+  updateCounts();
+  renderAdminTable();
+  toast('محصول حذف شد');
+}
+
+function resetForm() {
+  document.getElementById('productForm').reset();
+  document.getElementById('productId').value = '';
+  document.getElementById('pImageData').value = '';
+  document.getElementById('pImagePreview').src = '';
+  document.getElementById('uploadArea').classList.remove('has-image');
+}
+
+function renderAdminTable() {
+  const tb = document.getElementById('adminTable');
+  if (products.length === 0) {
+    tb.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-muted)">محصولی برای نمایش وجود ندارد</td></tr>`;
+    return;
+  }
+  tb.innerHTML = products.map(p => `
+    <tr>
+      <td><img src="${p.image}" onerror="this.src='https://via.placeholder.com/50/1e3a8a/fff?text=IMG'"></td>
+      <td><strong>${p.name}</strong></td>
+      <td>${p.platforms.map(pl => `<span class="badge ${pl}" style="padding:3px 8px;font-size:0.7rem;display:inline-flex">${pl.toUpperCase()}</span>`).join(' ')}</td>
+      <td><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${p.rating}</td>
+      <td>
+        <div class="action-btns">
+          <button class="mini-btn edit" onclick="editProduct(${p.id})" title="ویرایش"><i class="fa-solid fa-pen"></i></button>
+          <button class="mini-btn delete" onclick="deleteProduct(${p.id})" title="حذف"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/* ================================
+   راه‌اندازی اولیه
+   ================================ */
+initSlider();
+renderProducts();
+updateCounts();
+</script>
+</body>
+</html>
