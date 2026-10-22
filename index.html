@@ -48,7 +48,7 @@ img { max-width: 100%; display: block; }
 .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 /* ================================
-   هدر حرفه‌ای و خلوت
+   هدر حرفه‌ای و کاملاً منظم (اصلاح شده برای دسکتاپ)
    ================================ */
 header {
   position: sticky; top: 0; z-index: 100;
@@ -59,8 +59,20 @@ header {
 }
 [data-theme="dark"] header { background: rgba(15, 23, 42, 0.9); }
 
-.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.5rem; color: var(--primary); }
+.nav { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  height: 72px; 
+}
+.logo { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  font-weight: 800; 
+  font-size: 1.5rem; 
+  color: var(--primary); 
+}
 [data-theme="dark"] .logo { color: #fff; }
 .logo-icon {
   width: 42px; height: 42px; border-radius: 10px;
@@ -71,13 +83,45 @@ header {
 .logo span { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 [data-theme="dark"] .logo span { background: linear-gradient(90deg, #60a5fa, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-.nav-menu { display: flex; gap: 8px; list-style: none; }
-.nav-menu a {
-  padding: 8px 16px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; color: var(--text-muted);
+/* تراز بندی کامل منو در دسکتاپ */
+.nav-menu { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  list-style: none; 
+  margin: 0;
+  padding: 0;
 }
-.nav-menu a:hover, .nav-menu a.active { color: var(--accent); background: rgba(59, 130, 246, 0.08); }
+.nav-menu > li {
+  display: flex;
+  align-items: center;
+}
+.nav-menu a:not(.mobile-admin-btn) {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.nav-menu a:not(.mobile-admin-btn):hover, 
+.nav-menu a:not(.mobile-admin-btn).active { 
+  color: var(--accent); 
+  background: rgba(59, 130, 246, 0.08); 
+}
 
-.nav-actions { display: flex; gap: 12px; align-items: center; }
+/* مخفی کردن دکمه مدیریت در دسکتاپ برای جلوگیری از به هم ریختگی */
+.mobile-only-admin {
+  display: none !important;
+}
+
+.nav-actions { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+}
 .icon-btn {
   width: 40px; height: 40px; border-radius: 10px;
   background: var(--bg); color: var(--text); border: 1px solid var(--border);
@@ -86,12 +130,12 @@ header {
 .icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
 .menu-toggle { display: none; }
 
-/* دکمه مدیریت در منوی موبایل */
+/* دکمه مدیریت مخصوص موبایل */
 .mobile-admin-btn {
   width: 100%; padding: 12px; border-radius: 10px;
   background: var(--primary); color: #fff; font-weight: 600;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-top: 16px;
+  font-size: 1rem;
 }
 .mobile-admin-btn:hover { background: var(--accent); }
 
@@ -420,11 +464,25 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 @media (max-width: 640px) {
   .nav-menu {
     position: fixed; top: 72px; right: -100%; width: 85%; height: calc(100vh - 72px);
-    background: var(--surface); flex-direction: column; padding: 24px;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 99;
+    background: var(--surface); flex-direction: column; align-items: stretch;
+    padding: 24px; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    transition: right 0.3s ease; z-index: 99; overflow-y: auto;
   }
   .nav-menu.open { right: 0; }
-  .nav-menu a { padding: 14px 16px; font-size: 1.1rem; border-bottom: 1px solid var(--border); }
+  .nav-menu > li { display: block; border-bottom: 1px solid var(--border); }
+  .nav-menu a:not(.mobile-admin-btn) {
+    height: 50px; justify-content: flex-start; font-size: 1.1rem;
+  }
+  
+  /* نمایش دکمه مدیریت فقط در موبایل */
+  .mobile-only-admin {
+    display: block !important;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border);
+    border-bottom: none !important;
+  }
+  
   .menu-toggle { display: flex; }
   
   .hero-slider { height: 400px; }
@@ -483,7 +541,8 @@ textarea.form-control { resize: vertical; min-height: 100px; }
       <li><a href="#categories">دسته‌بندی</a></li>
       <li><a href="#products">بازی‌ها</a></li>
       <li><a href="#contact">تماس با ما</a></li>
-      <li style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+      <!-- این آیتم فقط در موبایل نمایش داده می‌شود -->
+      <li class="mobile-only-admin">
         <button class="mobile-admin-btn" id="openAdminMobile">
           <i class="fa-solid fa-user-shield"></i> پنل مدیریت
         </button>
@@ -1001,11 +1060,10 @@ document.querySelectorAll('.nav-menu a').forEach(a => {
 /* ================================
    پنل ادمین و آپلود عکس
    ================================ */
-// اتصال دکمه مدیریت در منوی موبایل و هدر (اگر وجود داشت) به یک تابع واحد
 function openAdminPanel() {
   document.getElementById('adminModal').classList.add('active');
   document.body.style.overflow = 'hidden';
-  document.getElementById('navMenu').classList.remove('open'); // بستن منوی موبایل
+  document.getElementById('navMenu').classList.remove('open');
   
   if (isAdmin) {
     document.getElementById('loginView').style.display = 'none';
@@ -1023,7 +1081,6 @@ function doLogin() {
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value.trim();
   
-  // رمزهای عبور جدید و مخفی
   if (u === 'thegame12' && p === '12gamethe_!') {
     isAdmin = true;
     localStorage.setItem('tg_admin', 'true');
@@ -1051,7 +1108,6 @@ function switchTab(t) {
   if (t === 'list') renderAdminTable();
 }
 
-/* آپلود عکس با FileReader */
 function handleImageUpload(input) {
   const file = input.files[0];
   if (!file) return;
@@ -1083,7 +1139,6 @@ function saveProduct(e) {
   const imageData = document.getElementById('pImageData').value;
   if (!imageData) { toast('لطفاً یک تصویر برای بازی انتخاب کنید', 'error'); return; }
   
-  // استفاده از تابع safeValue برای تبدیل خودکار خالی به "ثبت نشده"
   const data = {
     id: document.getElementById('productId').value ? parseInt(document.getElementById('productId').value) : Date.now(),
     name: safeValue(document.getElementById('pName').value) === 'ثبت نشده' ? 'بازی بدون نام' : safeValue(document.getElementById('pName').value),
